@@ -1,47 +1,54 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
-
-namespace lect02
+namespace Converter
 {
-    public class Address
+    public class Converter
     {
-        private string index;
-        private string country;
-        private string city;
-        private string street;
-        private string house;
-        private int apartment;
+        private readonly double usd;
+        private readonly double eur;
+        private readonly double rub;
 
-        public string Index { get => index; set => index = value; }
-        public string Country { get => country; set => country = value; }
-        public string City { get => city; set => city = value; }
-        public string Street { get => street; set => street = value; }
-        public string House { get => house; set => house = value; }
-        public int Apartment { get => apartment; set => apartment = value; }
-
-        public override string ToString()
+        public Converter(double usd, double eur, double rub)
         {
-            return $"{Index}, {Country}: {City}; {Street} {House}, {Apartment}";
+            this.usd = usd;
+            this.eur = eur;
+            this.rub = rub;
+        }
+
+        public double ConvertUsd(double money, bool toUsd = true)
+        {
+            return toUsd ? money / usd : money * usd;
+        }
+        public double ConvertEur(double money, bool toEur = true)
+        {
+            return toEur ? money / eur : money * eur;
+        }
+        public double ConvertRub(double money, bool toRub = true)
+        {
+            return toRub ? money / rub : money * rub;
         }
     }
-
     internal class Program
     {
         static void Main(string[] args)
         {
-            Address b = new Address
-            {
-                Index = "06848",
-                Country = "Ukraine",
-                City = "Odessa",
-                Street = "Belin",
-                House = "2B",
-                Apartment = 11
-            };
+            Converter converter = new Converter(36.9, 36.5, 0.6);
 
-            Console.WriteLine(b.ToString());
+            
+            Console.WriteLine(converter.ConvertUsd(10));
+            Console.WriteLine(converter.ConvertUsd(10, false));
+            Console.WriteLine();
+
+            
+            Console.WriteLine(converter.ConvertEur(10));
+            Console.WriteLine(converter.ConvertEur(10, false));
+            Console.WriteLine();
+
+            
+            Console.WriteLine(converter.ConvertRub(10));
+            Console.WriteLine(converter.ConvertRub(10, false));
         }
     }
 }
